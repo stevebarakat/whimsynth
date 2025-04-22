@@ -1,11 +1,6 @@
-import React, {
-  useState,
-  useEffect,
-  useImperativeHandle,
-  forwardRef,
-} from "react";
+import { useState, useEffect, useImperativeHandle, forwardRef } from "react";
 import * as Tone from "tone";
-import { INSTRUMENT_TYPES, EFFECTS_BUS } from "../../constants";
+import { INSTRUMENT_TYPES } from "../../constants";
 import "./keyboard.css";
 
 interface SharedKeyboardProps {
@@ -17,7 +12,7 @@ interface SharedKeyboardProps {
 }
 
 const Keyboard = forwardRef<
-  { instrument: Tone.PolySynth | null },
+  { instrument: Tone.DuoSynth | null },
   SharedKeyboardProps
 >(
   (
@@ -31,7 +26,7 @@ const Keyboard = forwardRef<
     ref
   ) => {
     const [isLoaded, setIsLoaded] = useState(false);
-    const [instrument, setInstrument] = useState<Tone.PolySynth | null>(null);
+    const [instrument, setInstrument] = useState<Tone.DuoSynth | null>(null);
     const [currentInstrumentType, setCurrentInstrumentType] =
       useState(instrumentType);
     const [isStickyKeys, setIsStickyKeys] = useState(false);
@@ -61,12 +56,12 @@ const Keyboard = forwardRef<
     for (let o = octaveRange.min; o <= octaveRange.max; o++) {
       octave.forEach((key) => {
         const note = `${key.note}${o}`;
-        // Only include notes from G3 to C5
+        // Only include notes from G3 to C6
         const noteValue = Tone.Frequency(note).toMidi();
         const g3Value = Tone.Frequency("G3").toMidi();
-        const c5Value = Tone.Frequency("C6").toMidi();
+        const c6Value = Tone.Frequency("C6").toMidi();
 
-        if (noteValue >= g3Value && noteValue <= c5Value) {
+        if (noteValue >= g3Value && noteValue <= c6Value) {
           keys.push({ note, isSharp: key.isSharp });
         }
       });
@@ -139,12 +134,22 @@ const Keyboard = forwardRef<
       try {
         // Only release if this note is actually active and we're not in sticky mode
         if (activeNotes.has(note) && !isStickyKeys) {
-          instrument.triggerRelease(note);
-          setActiveNotes(new Set());
-          onKeyClick("");
+          // Ensure the note is valid before releasing
+          if (note && typeof note === "string") {
+            // For DuoSynth, we need to release both voices
+            instrument.triggerRelease();
+            setActiveNotes((prev) => {
+              const next = new Set(prev);
+              next.delete(note);
+              return next;
+            });
+            onKeyClick("");
+          }
         }
       } catch (e) {
         console.error("Error handling key release:", e);
+        // Reset active notes if we encounter an error
+        setActiveNotes(new Set());
       }
     };
 
@@ -152,8 +157,7 @@ const Keyboard = forwardRef<
     useEffect(() => {
       return () => {
         if (instrument && activeNotes.size > 0) {
-          const notes = Array.from(activeNotes);
-          instrument.triggerRelease(notes);
+          instrument.triggerRelease();
           setActiveNotes(new Set());
         }
       };
@@ -161,7 +165,7 @@ const Keyboard = forwardRef<
 
     // Initialize the instrument
     useEffect(() => {
-      let currentInstrument: Tone.PolySynth | null = null;
+      let currentInstrument: Tone.DuoSynth | null = null;
 
       const initializeInstrument = async () => {
         try {
@@ -169,16 +173,22 @@ const Keyboard = forwardRef<
           if (instrument) {
             // Release any active notes before disposing
             if (activeNotes.size > 0) {
-              const notes = Array.from(activeNotes);
-              instrument.triggerRelease(notes);
+              instrument.triggerRelease();
               setActiveNotes(new Set());
             }
             instrument.dispose();
           }
 
-          currentInstrument = new Tone.PolySynth(Tone.Synth, {
-            oscillator: {
-              type: "triangle",
+          currentInstrument = new Tone.DuoSynth({
+            voice0: {
+              oscillator: {
+                type: "triangle",
+              },
+            },
+            voice1: {
+              oscillator: {
+                type: "triangle",
+              },
             },
           });
 
@@ -206,26 +216,7 @@ const Keyboard = forwardRef<
           currentInstrument.dispose();
         }
       };
-    }, [instrumentType, currentInstrumentType]);
-
-    // Modify playNote to use a longer note duration for better envelope effect
-    const playNote = async (note: string) => {
-      if (instrument && isLoaded) {
-        try {
-          // Ensure audio context is running
-          if (Tone.context.state !== "running") {
-            await Tone.start();
-          }
-          // Use a longer note duration to hear the envelope effect
-          instrument.triggerAttackRelease(note, "4n");
-        } catch (e) {
-          console.error("Error playing note:", e);
-          setTimeout(() => {
-            setIsLoaded(true);
-          }, 3000);
-        }
-      }
-    };
+    }, [instrumentType, currentInstrumentType, instrument, activeNotes.size]);
 
     const toggleStickyKeys = () => {
       setIsStickyKeys(!isStickyKeys);
@@ -302,13 +293,13 @@ const Keyboard = forwardRef<
 
     return (
       <div className="keyboard-container">
-        <button
+        {/* <button
           className={`button ${isStickyKeys ? "active" : ""}`}
           onClick={toggleStickyKeys}
           aria-pressed={isStickyKeys}
         >
           Hold
-        </button>
+        </button> */}
         <div className="keyboard">
           <div className="piano-keys">
             {renderWhiteKeys()}

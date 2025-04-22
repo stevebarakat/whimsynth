@@ -199,7 +199,7 @@ function App() {
   const [effectsState, effectsSend] = useMachine(effectsMachine);
   const [activeKeys, setActiveKeys] = useState<string[]>([]);
   const [isAudioContextStarted, setIsAudioContextStarted] = useState(false);
-  const keyboardRef = useRef<{ instrument: Tone.PolySynth | null }>({
+  const keyboardRef = useRef<{ instrument: Tone.DuoSynth | null }>({
     instrument: null,
   });
 
@@ -331,9 +331,8 @@ function App() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.synth}>
-        <div className={styles.controlsContainer}>
+    <div className={styles.synth}>
+      {/* <div className={styles.controlsContainer}>
           <div>
             <EffectsTabs
               filterFrequency={filterFrequency}
@@ -367,13 +366,12 @@ function App() {
               onToggleDistortion={toggleDistortion}
             />
           </div>
-        </div>
-        <Keyboard
-          ref={keyboardRef}
-          activeKeys={activeKeys}
-          onKeyClick={handleKeyClick}
-        />
-      </div>
+        </div> */}
+      <Keyboard
+        ref={keyboardRef}
+        activeKeys={activeKeys}
+        onKeyClick={handleKeyClick}
+      />
     </div>
   );
 }
