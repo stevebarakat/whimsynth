@@ -1,0 +1,44 @@
+.gridContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.gridRow {
+  display: flex;
+  align-items: center;
+}
+
+.rowLabel {
+  color: hsl(220, 13%, 90%);
+  font-size: 1rem;
+  font-weight: 500;
+  min-width: 2rem;
+  text-align: center;
+}
+
+.rowCells {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.gridCell {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 4px;
+  background-color: hsl(220, 13%, 30%);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.gridCell:hover {
+  background-color: hsl(220, 13%, 40%);
+}
+
+.gridCell.selected {
+  background-color: hsl(220, 70%, 55%);
+}
+
+.gridCell.current {
+  border: 2px solid hsl(120, 70%, 50%);
+}
