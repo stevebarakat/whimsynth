@@ -10,12 +10,19 @@
   --section-spacing: 0.75rem;
 }
 
+body {
+  display: grid;
+  place-items: center;
+}
+
 .synth {
   display: flex;
   flex-direction: column;
   gap: var(--section-spacing);
   margin: 0 auto;
   width: 830px;
+  background-color: hsl(275, 39%, 30%);
+  padding: 1rem;
 }
 
 .sequencerControls {

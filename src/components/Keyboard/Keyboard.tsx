@@ -1,7 +1,7 @@
 import { useState, useEffect, useImperativeHandle, forwardRef } from "react";
 import * as Tone from "tone";
 import { INSTRUMENT_TYPES } from "../../constants";
-import "./keyboard.css";
+import styles from "./Keyboard.module.css";
 
 interface SharedKeyboardProps {
   activeKeys?: string[];
@@ -239,9 +239,9 @@ const Keyboard = forwardRef<
           return (
             <div
               key={`white-${key.note}-${index}`}
-              className={`white-key ${isActive ? "active" : ""} ${
-                isHighlighted ? "highlighted" : ""
-              }`}
+              className={`${styles.whiteKey} ${
+                isActive ? styles.whiteKeyActive : ""
+              } ${isHighlighted ? styles.whiteKeyHighlighted : ""}`}
               onPointerDown={() => handleKeyPress(key.note)}
               onPointerUp={() => handleKeyRelease(key.note)}
               onPointerLeave={() => handleKeyRelease(key.note)}
@@ -274,9 +274,9 @@ const Keyboard = forwardRef<
           return (
             <div
               key={`black-${key.note}-${index}`}
-              className={`black-key ${isActive ? "active" : ""} ${
-                isHighlighted ? "highlighted" : ""
-              }`}
+              className={`${styles.blackKey} ${
+                isActive ? styles.blackKeyActive : ""
+              } ${isHighlighted ? styles.blackKeyHighlighted : ""}`}
               style={{ left: `${position}%`, width: `${whiteKeyWidth * 0.7}%` }}
               onPointerDown={() => handleKeyPress(key.note)}
               onPointerUp={() => handleKeyRelease(key.note)}
@@ -292,7 +292,7 @@ const Keyboard = forwardRef<
     }));
 
     return (
-      <div className="keyboard-container">
+      <div className={styles.keyboardContainer}>
         {/* <button
           className={`button ${isStickyKeys ? "active" : ""}`}
           onClick={toggleStickyKeys}
@@ -300,8 +300,8 @@ const Keyboard = forwardRef<
         >
           Hold
         </button> */}
-        <div className="keyboard">
-          <div className="piano-keys">
+        <div className={styles.keyboard}>
+          <div className={styles.pianoKeys}>
             {renderWhiteKeys()}
             {renderBlackKeys()}
           </div>

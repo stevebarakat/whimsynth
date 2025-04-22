@@ -11,6 +11,7 @@ import Keyboard from "./components/Keyboard";
 import styles from "./styles/App.module.css";
 import "@/styles/effects.css";
 import * as Tabs from "@radix-ui/react-tabs";
+import "./styles/variables.css";
 
 function EffectsTabs({
   filterFrequency,
@@ -332,41 +333,41 @@ function App() {
 
   return (
     <div className={styles.synth}>
-      {/* <div className={styles.controlsContainer}>
-          <div>
-            <EffectsTabs
-              filterFrequency={filterFrequency}
-              filterDepth={filterDepth}
-              filterWet={filterWet}
-              filterResonance={filterResonance}
-              delayTime={delayTime}
-              delayFeedback={delayFeedback}
-              delayWet={delayWet}
-              reverbDecay={reverbDecay}
-              reverbPreDelay={reverbPreDelay}
-              reverbWet={reverbWet}
-              distortionAmount={distortionAmount}
-              distortionWet={distortionWet}
-              onFrequencyChange={updateFilterFrequency}
-              onDepthChange={updateFilterDepth}
-              onFilterWetChange={updateFilterWet}
-              onResonanceChange={updateFilterResonance}
-              onDelayTimeChange={updateDelayTime}
-              onFeedbackChange={updateDelayFeedback}
-              onDelayWetChange={updateDelayWet}
-              onDecayChange={updateReverbDecay}
-              onPreDelayChange={updateReverbPreDelay}
-              onReverbWetChange={updateReverbWet}
-              onDistortionChange={updateDistortionAmount}
-              onDistortionWetChange={updateDistortionWet}
-              isEffectActive={isEffectActive}
-              onToggleFilter={toggleFilter}
-              onToggleDelay={toggleDelay}
-              onToggleReverb={toggleReverb}
-              onToggleDistortion={toggleDistortion}
-            />
-          </div>
-        </div> */}
+      <div className={styles.controlsContainer}>
+        <div>
+          <EffectsTabs
+            filterFrequency={filterFrequency}
+            filterDepth={filterDepth}
+            filterWet={filterWet}
+            filterResonance={filterResonance}
+            delayTime={delayTime}
+            delayFeedback={delayFeedback}
+            delayWet={delayWet}
+            reverbDecay={reverbDecay}
+            reverbPreDelay={reverbPreDelay}
+            reverbWet={reverbWet}
+            distortionAmount={distortionAmount}
+            distortionWet={distortionWet}
+            onFrequencyChange={updateFilterFrequency}
+            onDepthChange={updateFilterDepth}
+            onFilterWetChange={updateFilterWet}
+            onResonanceChange={updateFilterResonance}
+            onDelayTimeChange={updateDelayTime}
+            onFeedbackChange={updateDelayFeedback}
+            onDelayWetChange={updateDelayWet}
+            onDecayChange={updateReverbDecay}
+            onPreDelayChange={updateReverbPreDelay}
+            onReverbWetChange={updateReverbWet}
+            onDistortionChange={updateDistortionAmount}
+            onDistortionWetChange={updateDistortionWet}
+            isEffectActive={isEffectActive}
+            onToggleFilter={toggleFilter}
+            onToggleDelay={toggleDelay}
+            onToggleReverb={toggleReverb}
+            onToggleDistortion={toggleDistortion}
+          />
+        </div>
+      </div>
       <Keyboard
         ref={keyboardRef}
         activeKeys={activeKeys}

@@ -1,0 +1,224 @@
+.keyboardContainer {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1),
+    inset 0 1px 1px hsl(220, 13%, 25%);
+  border: 1px solid var(--keyboard-border);
+}
+
+.keyboard {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.pianoKeys {
+  position: relative;
+  height: 100%;
+  display: flex;
+  gap: 2px;
+}
+
+.whiteKey {
+  flex: 1;
+  background: linear-gradient(to bottom, hsl(0, 0%, 98%), var(--key-white));
+  border: 1px solid hsl(220, 13%, 85%);
+  border-radius: 0 0 6px 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.1), inset 0 1px 1px hsl(0, 0%, 100%);
+}
+
+.whiteKey:hover {
+  background: linear-gradient(
+    to bottom,
+    var(--key-white),
+    var(--key-white-hover)
+  );
+  transform: translateY(1px);
+}
+
+.whiteKeyActive {
+  background: var(--key-white-active);
+  transform: translateY(2px);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.1), inset 0 1px 1px hsl(220, 70%, 90%);
+}
+
+.whiteKeyHighlighted {
+  background-color: hsl(180, 70%, 80%);
+}
+
+.whiteKeyDisabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.whiteKeyDisabled:hover {
+  background-color: #e0e0e0;
+}
+
+.blackKey {
+  position: absolute;
+  width: 65%;
+  height: 65%;
+  background: linear-gradient(to bottom, hsl(220, 13%, 22%), var(--key-black));
+  border-radius: 0 0 4px 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  z-index: 1;
+  box-shadow: 0 4px 6px rgb(0 0 0 / 0.3), inset 0 1px 1px hsl(220, 13%, 25%);
+}
+
+.blackKey:hover {
+  background: linear-gradient(
+    to bottom,
+    var(--key-black-hover),
+    var(--key-black)
+  );
+  transform: translateY(1px);
+}
+
+.blackKeyActive {
+  background: var(--key-black-active);
+  transform: translateY(2px);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.2), inset 0 1px 1px hsl(220, 70%, 35%);
+}
+
+.blackKeyHighlighted {
+  background-color: hsl(180, 70%, 30%);
+}
+
+.blackKeyHighlighted .blackKeyLabel {
+  color: #333;
+}
+
+.blackKeyDisabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.blackKeyLabel {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 12px;
+  transition: opacity 0.1s ease;
+  word-break: break-all;
+  line-height: 1;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.whiteKeyLabel {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #333;
+  pointer-events: none;
+}
+
+.loading,
+.loadingError {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  z-index: 10;
+  box-shadow: var(--box-shadow);
+  background-color: var(--bg-color);
+}
+
+.loadingError {
+  background-color: hsl(0, 100%, 50%);
+  box-shadow: 0 2px 6px hsl(0 100% 10% / 0.5), 0 8px 24px hsl(0 100% 10% / 0.5),
+    0 16px 32px hsl(0 100% 10% / 0.5);
+}
+
+.keyboardControls {
+  display: flex;
+  justify-content: flex-end;
+  padding: 4px 8px;
+  margin-bottom: 4px;
+}
+
+.button {
+  padding: 0.875rem 1.75rem;
+  background: linear-gradient(
+    to bottom,
+    hsl(220, 13%, 30%),
+    hsl(220, 13%, 25%)
+  );
+  border: none;
+  border-radius: 4px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.button:hover {
+  background: linear-gradient(
+    to bottom,
+    hsl(220, 13%, 35%),
+    hsl(220, 13%, 30%)
+  );
+}
+
+.buttonActive {
+  background: linear-gradient(
+    to bottom,
+    hsl(220, 13%, 40%),
+    hsl(220, 13%, 35%)
+  );
+  box-shadow: inset 0 1px 1px hsl(220, 13%, 45%);
+}
+
+@media (max-width: 768px) {
+  .keyboardContainer {
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .keyboard {
+    height: 180px;
+    padding: 1rem;
+  }
+
+  .pianoKeys {
+    height: 130px;
+  }
+
+  .whiteKeyLabel,
+  .blackKeyLabel {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .keyboardContainer {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .keyboard {
+    height: 150px;
+    padding: 0.75rem;
+  }
+
+  .pianoKeys {
+    height: 100px;
+  }
+
+  .whiteKeyLabel,
+  .blackKeyLabel {
+    font-size: 8px;
+  }
+}
