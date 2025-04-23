@@ -336,8 +336,9 @@ function App() {
       <div className={styles.synth}>
         <div className={styles.controlsContainer}>
           <div className={styles.innerControlsContainer}>
-            <div></div>
-            <div className={styles.indent}></div>
+            <div className={styles.box}></div>
+            <div className={styles.indent}></div>{" "}
+            <div className={styles.box}></div>
             {/* <div>
           <EffectsTabs
             filterFrequency={filterFrequency}
@@ -372,6 +373,7 @@ function App() {
           />
         </div> */}
             <div className={styles.indent}></div>
+            <div className={styles.box}></div>
           </div>
           <div className={styles.horizontalIndent}></div>
         </div>

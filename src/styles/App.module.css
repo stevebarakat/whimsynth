@@ -44,10 +44,20 @@ body {
 }
 .innerControlsContainer {
   display: grid;
-  grid-template-columns: 25% 50% 25%;
+  grid-template-columns: 24% 1% 50% 1% 25%;
   width: 100%;
   justify-content: space-between;
   height: 200px;
+}
+
+.box {
+  position: relative;
+  height: calc(var(--row-height) - 8px);
+  outline: 4px solid #522e6b;
+  outline-offset: -4px;
+  border: 6px solid rgba(207, 184, 224, 0.4);
+  border-radius: 8px;
+  background: #522e6b;
 }
 
 .indent {
