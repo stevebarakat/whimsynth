@@ -57,6 +57,20 @@ body {
   );
 }
 
+.horizontalIndent {
+  align-self: flex-end;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(
+    0deg,
+    #35293d,
+    #884db3,
+    #1a171c,
+    #6b4785,
+    #6e3399
+  );
+}
+
 @media (max-width: 1200px) {
   .controlsContainer {
     grid-template-columns: 1fr;
@@ -154,11 +168,68 @@ input:checked + .toggleSlider:before {
   gap: 20px;
 }
 
+.modWheel {
+  --grooves: repeating-linear-gradient(
+    0deg,
+    transparent 0px 1px,
+    rgba(16, 13, 18, 0.25) 2px 4px
+  );
+  --train-track-left: linear-gradient(
+    90deg,
+    transparent 0px 4px,
+    rgba(158, 122, 184, 0.5) 4px 6px,
+    transparent 3px
+  );
+  --train-track-right: linear-gradient(
+    270deg,
+    transparent 0px 4px,
+    rgba(158, 122, 184, 0.5) 4px 6px,
+    transparent 3px
+  );
+  --base-texture: linear-gradient(180deg, #362442, #6d3d8f 28%, #362442);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  border-radius: 2px;
+  background: var(--grooves), var(--train-track-left), var(--train-track-right),
+    var(--base-texture);
+  cursor: pointer;
+}
+
+.modWheelKnob {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 24px;
+  background: linear-gradient(
+      to bottom,
+      hsl(275deg 15% 6% / 0.5),
+      rgba(16, 13, 18, 0)
+    ),
+    linear-gradient(to top, hsl(275deg 15% 6% / 0.5), rgba(16, 13, 18, 0));
+  overflow: clip;
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(207, 189, 219, 0.25);
+  }
+}
+
 .modWheelwell {
   --gap: 2px;
   position: relative;
   width: calc(24px + 4 * var(--gap));
-  height: calc(92px + 4 * var(--gap));
+  height: calc(102px + 4 * var(--gap));
   padding: var(--gap);
   /* outline: 1px solid rgba(207, 184, 224, 0.4);
   outline-offset: 2px; */

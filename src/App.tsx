@@ -369,12 +369,21 @@ function App() {
             onToggleDistortion={toggleDistortion}
           />
         </div> */}
+          <div className={styles.horizontalIndent}></div>
           <div className={styles.indent}></div>
         </div>
         <div className={styles.keyRow}>
           <div className={styles.modWheels}>
-            <div className={styles.modWheelwell}></div>
-            <div className={styles.modWheelwell}></div>
+            <div className={styles.modWheelwell}>
+              <div className={styles.modWheel}>
+                <div className={styles.modWheelKnob}></div>
+              </div>
+            </div>
+            <div className={styles.modWheelwell}>
+              <div className={styles.modWheel}>
+                <div className={styles.modWheelKnob}></div>
+              </div>
+            </div>
           </div>
           <Keyboard
             ref={keyboardRef}
