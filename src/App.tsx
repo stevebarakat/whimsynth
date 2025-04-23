@@ -335,8 +335,10 @@ function App() {
     <div className={styles.synthSides}>
       <div className={styles.synth}>
         <div className={styles.controlsContainer}>
-          <div className={styles.indent}></div>
-          {/* <div>
+          <div className={styles.innerControlsContainer}>
+            {" "}
+            <div className={styles.indent}></div>
+            {/* <div>
           <EffectsTabs
             filterFrequency={filterFrequency}
             filterDepth={filterDepth}
@@ -369,8 +371,9 @@ function App() {
             onToggleDistortion={toggleDistortion}
           />
         </div> */}
+            <div className={styles.indent}></div>
+          </div>
           <div className={styles.horizontalIndent}></div>
-          <div className={styles.indent}></div>
         </div>
         <div className={styles.keyRow}>
           <div className={styles.modWheels}>

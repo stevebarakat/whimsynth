@@ -39,8 +39,14 @@ body {
 
 .controlsContainer {
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
+  height: 200px;
+}
+.innerControlsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   margin-bottom: 0.25rem;
+  width: 100%;
   justify-content: space-between;
   height: 200px;
 }

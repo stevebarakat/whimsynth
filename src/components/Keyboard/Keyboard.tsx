@@ -284,13 +284,6 @@ const Keyboard = forwardRef<
 
     return (
       <div className={styles.keyboardContainer}>
-        {/* <button
-          className={`button ${isStickyKeys ? "active" : ""}`}
-          onClick={toggleStickyKeys}
-          aria-pressed={isStickyKeys}
-        >
-          Hold
-        </button> */}
         <div className={styles.keyboard}>
           <div className={styles.pianoKeys}>
             {renderWhiteKeys()} {<div className={styles.front}></div>}
