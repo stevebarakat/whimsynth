@@ -15,6 +15,11 @@ body {
   place-items: center;
 }
 
+.synthSides {
+  background: hsl(40, 40%, 50%);
+  padding: 0 22px;
+}
+
 .synth {
   display: flex;
   flex-direction: column;
@@ -23,6 +28,8 @@ body {
   width: 830px;
   background-color: hsl(275, 39%, 30%);
   padding: 1rem;
+  border-left: 4px solid hsl(0, 0%, 0%);
+  border-right: 4px solid hsl(0, 0%, 0%);
 }
 
 .sequencerControls {
@@ -33,12 +40,21 @@ body {
 .controlsContainer {
   display: flex;
   gap: 0.5rem;
-  padding: 0.5rem;
-  background: var(--control-bg);
-  border-radius: var(--border-radius);
-  border: 1px solid hsl(0, 0%, 27%);
   margin-bottom: 0.25rem;
   justify-content: space-between;
+  height: 200px;
+}
+
+.indent {
+  width: 8px;
+  background: linear-gradient(
+    90deg,
+    #35293d,
+    #884db3,
+    #1a171c,
+    #6b4785,
+    #6e3399
+  );
 }
 
 @media (max-width: 1200px) {

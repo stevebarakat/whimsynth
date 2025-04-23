@@ -332,9 +332,11 @@ function App() {
   };
 
   return (
-    <div className={styles.synth}>
-      <div className={styles.controlsContainer}>
-        <div>
+    <div className={styles.synthSides}>
+      <div className={styles.synth}>
+        <div className={styles.controlsContainer}>
+          <div className={styles.indent}></div>
+          {/* <div>
           <EffectsTabs
             filterFrequency={filterFrequency}
             filterDepth={filterDepth}
@@ -366,13 +368,15 @@ function App() {
             onToggleReverb={toggleReverb}
             onToggleDistortion={toggleDistortion}
           />
+        </div> */}
+          <div className={styles.indent}></div>
         </div>
+        <Keyboard
+          ref={keyboardRef}
+          activeKeys={activeKeys}
+          onKeyClick={handleKeyClick}
+        />
       </div>
-      <Keyboard
-        ref={keyboardRef}
-        activeKeys={activeKeys}
-        onKeyClick={handleKeyClick}
-      />
     </div>
   );
 }
