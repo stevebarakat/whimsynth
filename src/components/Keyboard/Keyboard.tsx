@@ -286,7 +286,9 @@ const Keyboard = forwardRef<
       <div className={styles.keyboardContainer}>
         <div className={styles.keyboard}>
           <div className={styles.pianoKeys}>
-            {renderWhiteKeys()} {<div className={styles.front}></div>}
+            {<div />}
+            {renderWhiteKeys()}
+            {<div />}
             {renderBlackKeys()}
           </div>
         </div>

@@ -1,6 +1,6 @@
 .keyboardContainer {
   background: hsl(0 0% 0%);
-  padding: 0 1px 6px 4px;
+  padding: 0 1px 6px 1px;
   width: 100%;
   display: flex;
   flex-direction: column;
