@@ -148,3 +148,21 @@ input:checked + .toggleSlider:before {
   color: var(--accent-color);
   border-bottom: 2px solid var(--accent-color);
 }
+
+.modWheels {
+  display: flex;
+  gap: 20px;
+}
+
+.modWheelwell {
+  width: 40px;
+  height: 120px;
+  background-color: hsl(276, 61%, 15%);
+  border-radius: 5px;
+}
+
+.keyRow {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}

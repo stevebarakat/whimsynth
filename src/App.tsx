@@ -371,11 +371,17 @@ function App() {
         </div> */}
           <div className={styles.indent}></div>
         </div>
-        <Keyboard
-          ref={keyboardRef}
-          activeKeys={activeKeys}
-          onKeyClick={handleKeyClick}
-        />
+        <div className={styles.keyRow}>
+          <div className={styles.modWheels}>
+            <div className={styles.modWheelwell}></div>
+            <div className={styles.modWheelwell}></div>
+          </div>
+          <Keyboard
+            ref={keyboardRef}
+            activeKeys={activeKeys}
+            onKeyClick={handleKeyClick}
+          />
+        </div>
       </div>
     </div>
   );
