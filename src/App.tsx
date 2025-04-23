@@ -336,7 +336,7 @@ function App() {
       <div className={styles.synth}>
         <div className={styles.controlsContainer}>
           <div className={styles.innerControlsContainer}>
-            {" "}
+            <div></div>
             <div className={styles.indent}></div>
             {/* <div>
           <EffectsTabs

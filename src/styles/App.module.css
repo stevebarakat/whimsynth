@@ -25,7 +25,7 @@ body {
   flex-direction: column;
   gap: var(--section-spacing);
   margin: 0 auto;
-  width: 830px;
+  width: 930px;
   background-color: hsl(275, 39%, 30%);
   padding: 16px;
   border-left: 4px solid hsl(0, 0%, 0%);
@@ -44,7 +44,7 @@ body {
 }
 .innerControlsContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 25% 50% 25%;
   margin-bottom: 0.25rem;
   width: 100%;
   justify-content: space-between;

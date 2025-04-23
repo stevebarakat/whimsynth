@@ -19,7 +19,7 @@ const Keyboard = forwardRef<
     {
       activeKeys = [],
       highlightedKeys = [],
-      octaveRange = { min: 4, max: 5 },
+      octaveRange = { min: 4, max: 6 },
       onKeyClick = () => {},
       instrumentType = INSTRUMENT_TYPES.SYNTH,
     },
@@ -56,12 +56,12 @@ const Keyboard = forwardRef<
     for (let o = octaveRange.min; o <= octaveRange.max; o++) {
       octave.forEach((key) => {
         const note = `${key.note}${o}`;
-        // Only include notes from G3 to C6
+        // Only include notes from G3 to F6
         const noteValue = Tone.Frequency(note).toMidi();
         const g3Value = Tone.Frequency("G3").toMidi();
-        const c6Value = Tone.Frequency("C6").toMidi();
+        const f6Value = Tone.Frequency("F6").toMidi();
 
-        if (noteValue >= g3Value && noteValue <= c6Value) {
+        if (noteValue >= g3Value && noteValue <= f6Value) {
           keys.push({ note, isSharp: key.isSharp });
         }
       });
