@@ -45,7 +45,6 @@ body {
 .innerControlsContainer {
   display: grid;
   grid-template-columns: 25% 50% 25%;
-  margin-bottom: 0.25rem;
   width: 100%;
   justify-content: space-between;
   height: 200px;
