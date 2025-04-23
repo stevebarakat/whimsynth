@@ -218,15 +218,6 @@ const Keyboard = forwardRef<
       };
     }, [instrumentType, currentInstrumentType, instrument, activeNotes.size]);
 
-    const toggleStickyKeys = () => {
-      setIsStickyKeys(!isStickyKeys);
-      if (isStickyKeys) {
-        // When turning off sticky keys, release any held note
-        setStickyNote(null);
-        onKeyClick("");
-      }
-    };
-
     // Render white keys
     const renderWhiteKeys = () => {
       return keys
@@ -302,7 +293,7 @@ const Keyboard = forwardRef<
         </button> */}
         <div className={styles.keyboard}>
           <div className={styles.pianoKeys}>
-            {renderWhiteKeys()}
+            {renderWhiteKeys()} {<div className={styles.front}></div>}
             {renderBlackKeys()}
           </div>
         </div>

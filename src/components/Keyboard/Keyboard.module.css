@@ -1,10 +1,13 @@
 .keyboardContainer {
+  background: black;
+  padding: 0 2px 5px 4px;
   width: 100%;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1),
     inset 0 1px 1px hsl(220, 13%, 25%);
   border: 1px solid var(--keyboard-border);
+  border-radius: 0 0 7.5px 7.5px;
 }
 
 .keyboard {
