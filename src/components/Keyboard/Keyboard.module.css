@@ -1,13 +1,12 @@
 .keyboardContainer {
-  background: black;
-  padding: 0 2px 5px 4px;
+  background: hsl(0 0% 0%/ 0.25);
+  padding: 0 1px 6px 4px;
   width: 100%;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1),
     inset 0 1px 1px hsl(220, 13%, 25%);
-  border: 1px solid var(--keyboard-border);
-  border-radius: 0 0 7.5px 7.5px;
+  border-radius: 0 9px 9px;
 }
 
 .keyboard {
@@ -26,12 +25,19 @@
 
 .whiteKey {
   flex: 1;
-  background: linear-gradient(180deg, #fff, #ccc);
+  background: linear-gradient(
+    to bottom,
+    #fff 0%,
+    #fff 92%,
+    #e3e3e3 93%,
+    #d1d1d1 95%
+  );
   border: 1px solid hsl(220, 13%, 85%);
   border-radius: 0 0 6px 6px;
   cursor: pointer;
   transition: all 0.15s ease;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 0.1), inset 0 1px 1px hsl(0, 0%, 100%);
+  box-shadow: 2px 0 3px rgba(0, 0, 0, 0.1), -2px 0 3px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgb(0 0 0 / 0.1), inset 0 1px 1px hsl(0, 0%, 100%);
   &:before {
     content: "";
     position: absolute;
@@ -47,8 +53,10 @@
 .whiteKey:hover {
   background: linear-gradient(
     to bottom,
-    var(--key-white),
-    var(--key-white-hover)
+    #fff 0%,
+    #fff 90%,
+    #f0f0f0 93%,
+    #e8e8e8 95%
   );
   transform: translateY(1px);
 }
