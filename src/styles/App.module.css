@@ -27,7 +27,7 @@ body {
   margin: 0 auto;
   width: 930px;
   background-color: hsl(275, 39%, 30%);
-  padding: 16px;
+  padding: 16px 0;
   border-left: 4px solid hsl(0, 0%, 0%);
   border-right: 4px solid hsl(0, 0%, 0%);
 }
@@ -44,7 +44,7 @@ body {
 }
 .innerControlsContainer {
   display: grid;
-  grid-template-columns: 24% 1% 50% 1% 25%;
+  grid-template-columns: 24% 1% 50% 1% 24%;
   width: 100%;
   justify-content: space-between;
   height: 200px;
