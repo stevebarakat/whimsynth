@@ -23,7 +23,6 @@ body {
 .synth {
   display: flex;
   flex-direction: column;
-  gap: var(--section-spacing);
   margin: 0 auto;
   width: 930px;
   background-color: hsl(275, 39%, 30%);
