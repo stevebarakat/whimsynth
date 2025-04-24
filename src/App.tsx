@@ -335,6 +335,7 @@ function App() {
     <div className={styles.synthSides}>
       <div className={styles.synth}>
         <div className={styles.controlsContainer}>
+          <div className={styles.backPanel}></div>
           <div className={styles.innerControlsContainer}>
             <div className={styles.box}></div>
             <div className={styles.indent}></div>{" "}
