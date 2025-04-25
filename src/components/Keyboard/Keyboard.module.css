@@ -36,6 +36,7 @@
 }
 
 .leftShadow {
+  pointer-events: none;
   position: absolute;
   background: linear-gradient(
     270deg,
@@ -50,6 +51,7 @@
 }
 
 .rightShadow {
+  pointer-events: none;
   position: absolute;
   right: 0;
   background: linear-gradient(
@@ -95,7 +97,7 @@
   }
 }
 
-.whiteKey:hover {
+.whiteKeyActive {
   background: linear-gradient(
     to bottom,
     #fff 0%,
@@ -104,14 +106,13 @@
     #e8e8e8 90%,
     #ddd 95%
   );
-  transform: translateY(1px);
-}
-
-.whiteKeyActive {
-  background: var(--key-white-active);
   transform: translateY(2px);
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.1), inset 0 1px 1px hsl(220, 70%, 90%);
 }
+
+/* .whiteKeyActive {
+  background: var(--key-white-active);
+} */
 
 .whiteKeyHighlighted {
   background-color: hsl(180, 70%, 80%);
