@@ -1,16 +1,16 @@
 .keyboardContainer {
   position: relative;
-  background: hsl(0 0% 0%);
   margin-right: 20px;
   width: 100%;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1),
     inset 0 1px 1px hsl(220, 13%, 25%);
-  border-radius: 0;
 }
 
 .keyboard {
+  background: hsl(0 0% 0%);
+  border-radius: 0 0 4px 4px;
   position: relative;
   padding: 0 3px 4px;
   overflow: hidden;
@@ -32,7 +32,6 @@
   height: 100%;
   display: flex;
   gap: 2px;
-  /* margin-top: 12px; */
 }
 
 .leftShadow {
@@ -67,27 +66,25 @@
 }
 
 .whiteKey {
-  position: relative;
-  height: 150px;
+  height: 144px;
   flex: 1;
-  background: linear-gradient(180deg, #fff, #ccc);
-  box-shadow: inset 0 0.5px 0.5px 1px rgba(0, 0, 0, 0.4),
-    inset 0 0 0.5px 1.5px hsla(0, 0%, 100%, 0.5),
-    inset 0 0 0.5px 2.5px hsla(0, 0%, 100%, 0.5);
+  background: linear-gradient(180deg, hsl(0, 0%, 100%), hsl(0, 0%, 80%));
+  box-shadow: inset 0 0.5px 0.5px 1px hsla(0, 0%, 0%, 0.4),
+    inset 0 0 0.5px 1.5px hsla(0, 0%, 90%, 0.5),
+    inset 0 0 0.5px 2.5px hsla(0, 0%, 90%, 0.5);
+  /* box-shadow: -1px 0 2px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.15),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8); */
   border-left: 1px solid #444;
   border-right: 1px solid #444;
   border-bottom: 3px solid #666;
   border-radius: 0 0 5px 5px;
   cursor: pointer;
   transition: all 0.15s ease;
-  box-shadow: -1px 0 2px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.15),
-    inset 0 1px 2px rgba(255, 255, 255, 0.8);
   &:before {
     z-index: 1000;
     content: "";
     display: block;
     height: 60px;
-
     background: linear-gradient(
       0deg,
       hsl(0 0% 80% / 0) 0%,
@@ -112,25 +109,23 @@
 
 .blackKey {
   position: absolute;
-  top: -3px;
-  left: 28px;
-  width: 65%;
-  height: 92px;
-  background: linear-gradient(to bottom, hsl(220, 13%, 22%), var(--key-black));
   border-radius: 0 0 5px 5px;
+  height: 88px;
+  border-top: 2px solid var(--key-black-hover);
+  background: linear-gradient(to bottom, hsl(220, 13%, 22%), var(--key-black));
   cursor: pointer;
   transition: all 0.15s ease;
   z-index: 20;
-  box-shadow: 0 4px 6px rgb(0 0 0 / 0.3), inset 0 1px 1px hsl(220, 13%, 25%);
+  box-shadow: 0 4px 6px hsl(0 0% 0% / 0.3), inset 0 1px 1px hsl(220, 13%, 25%);
+  transform: translateY(-2px);
   &:after {
     content: "";
+    top: 0px;
     position: absolute;
-    top: 0;
     left: 4px;
     right: 4px;
-    bottom: 14px;
+    bottom: 15px;
     background: linear-gradient(180deg, #4d4d4d, #333);
-    border-top: 4px solid #000;
     box-shadow: inset 0 0 12px 0px hsla(0, 0%, 100%, 0.1);
     border-radius: 0 0 5px 5px;
     overflow: hidden;
@@ -145,7 +140,10 @@
     var(--key-black-hover),
     var(--key-black)
   );
-  transform: translateY(2px);
+  &:after {
+    transform: translateY(2px);
+    transform-origin: top center;
+  }
 }
 
 .keyboardControls {
@@ -184,4 +182,46 @@
     hsl(220, 13%, 35%)
   );
   box-shadow: inset 0 1px 1px hsl(220, 13%, 45%);
+}
+
+@media (max-width: 768px) {
+  .keyboardContainer {
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .keyboard {
+    height: 180px;
+    padding: 1rem;
+  }
+
+  .pianoKeys {
+    height: 130px;
+  }
+
+  .whiteKeyLabel,
+  .blackKeyLabel {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .keyboardContainer {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .keyboard {
+    height: 150px;
+    padding: 0.75rem;
+  }
+
+  .pianoKeys {
+    height: 100px;
+  }
+
+  .whiteKeyLabel,
+  .blackKeyLabel {
+    font-size: 8px;
+  }
 }
