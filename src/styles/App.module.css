@@ -109,19 +109,11 @@ body {
   :root {
     --knob-size: 35px;
   }
-
-  .synth {
-    padding: 0.5rem;
-  }
 }
 
 @media (max-width: 480px) {
   :root {
     --knob-size: 30px;
-  }
-
-  .synth {
-    padding: 0.25rem;
   }
 }
 
@@ -252,8 +244,8 @@ input:checked + .toggleSlider:before {
     hsl(280, 30%, 35%) 6px,
     hsl(280, 30%, 45%) 20px,
     hsl(280, 50%, 30%) 80%,
-    hsl(280, 50%, 25%) 91%,
-    hsl(280, 30%, 45%) 91%,
-    hsl(280, 50%, 20%) 98%
+    hsl(280, 50%, 25%) 98%,
+    hsl(280, 50%, 25%) 98%,
+    hsl(280, 80%, 15%) 100%
   );
 }
