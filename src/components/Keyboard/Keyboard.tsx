@@ -248,9 +248,9 @@ const Keyboard = forwardRef<
       <div className={styles.keyboardContainer}>
         <div className={styles.keyboard}>
           <div className={styles.pianoKeys}>
-            {<div />}
+            {<div className={styles.leftShadow} />}
             {renderWhiteKeys()}
-            {<div />}
+            {<div className={styles.rightShadow} />}
             {renderBlackKeys()}
           </div>
         </div>
