@@ -38,7 +38,6 @@ body {
   margin: 0 auto;
   width: 930px;
   background-color: hsl(275, 39%, 30%);
-  padding-bottom: 16px;
   border-left: 4px solid hsl(0, 0%, 0%);
   border-right: 4px solid hsl(0, 0%, 0%);
 }
@@ -242,4 +241,15 @@ input:checked + .toggleSlider:before {
 .keyRow {
   display: flex;
   align-items: center;
+  background: linear-gradient(
+    180deg,
+    #6e3399 0,
+    #8752ad 4px,
+    #503663 6px,
+    #9e7ab8 20px,
+    #532673 80%,
+    #532673 90%,
+    #9e7ab8 92%,
+    #532673 98%
+  );
 }
