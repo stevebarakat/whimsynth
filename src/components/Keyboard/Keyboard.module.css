@@ -13,19 +13,17 @@
   border-radius: 0 0 4px 4px;
   position: relative;
   padding: 0 3px 4px;
-  overflow: hidden;
-  /* box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.183); */
-  box-shadow: hsl(280, 30%, 45%) 91%, hsl(280, 50%, 20%) 98%;
+  /* overflow: hidden; */
   box-shadow: 0 4px 6px -1px hsl(280, 30%, 45%),
     0 4px 6px -1px hsl(280, 50%, 20%);
   &:before {
     content: "";
-    height: 12px;
-    background: linear-gradient(180deg, #532673, #1a171c);
+    background: linear-gradient(180deg, hsl(275, 50%, 30%), hsl(276, 10%, 10%));
     display: flex;
     position: relative;
-    width: calc(100% + 8px);
-    left: -4px;
+    width: calc(100% + 160px);
+    height: 12px;
+    left: -129px;
     z-index: 5000;
   }
 }

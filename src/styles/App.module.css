@@ -236,16 +236,13 @@ input:checked + .toggleSlider:before {
 
 .keyRow {
   display: flex;
-  align-items: center;
+  overflow: clip;
   background: linear-gradient(
     180deg,
-    hsl(280, 50%, 40%) 0,
-    hsl(280, 40%, 45%) 4px,
-    hsl(280, 30%, 35%) 6px,
-    hsl(280, 30%, 45%) 20px,
-    hsl(280, 50%, 30%) 80%,
-    hsl(280, 50%, 25%) 98%,
-    hsl(280, 50%, 25%) 98%,
-    hsl(280, 80%, 15%) 100%
+    hsl(280, 50%, 30%) 0,
+    hsl(280, 50%, 10%) 12px,
+    hsl(280, 50%, 25%) 12px,
+    hsl(280, 50%, 35%) 98%,
+    hsl(280, 50%, 15%) 100%
   );
 }
