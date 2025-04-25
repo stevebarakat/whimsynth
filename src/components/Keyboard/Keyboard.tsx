@@ -29,8 +29,6 @@ const Keyboard = forwardRef<
     const [instrument, setInstrument] = useState<Tone.DuoSynth | null>(null);
     const [currentInstrumentType, setCurrentInstrumentType] =
       useState(instrumentType);
-    const [isStickyKeys, setIsStickyKeys] = useState(false);
-    const [stickyNote, setStickyNote] = useState<string | null>(null);
 
     // Keep track of currently playing notes
     const [activeNotes, setActiveNotes] = useState<Set<string>>(new Set());
@@ -84,44 +82,10 @@ const Keyboard = forwardRef<
           Tone.start();
         }
 
-        if (isStickyKeys) {
-          if (stickyNote === note) {
-            // If clicking the same note, release it
-            instrument.triggerRelease(note);
-            setStickyNote(null);
-            setActiveNotes((prev) => {
-              const next = new Set(prev);
-              next.delete(note);
-              return next;
-            });
-            onKeyClick("");
-          } else {
-            // If clicking a different note, switch to it
-            if (stickyNote) {
-              instrument.triggerRelease(stickyNote);
-              setActiveNotes((prev) => {
-                const next = new Set(prev);
-                next.delete(stickyNote);
-                next.add(note);
-                return next;
-              });
-            } else {
-              setActiveNotes((prev) => {
-                const next = new Set(prev);
-                next.add(note);
-                return next;
-              });
-            }
-            instrument.triggerAttack(note);
-            setStickyNote(note);
-            onKeyClick(note);
-          }
-        } else {
-          // In non-sticky mode, just trigger the note and set active note
-          instrument.triggerAttack(note);
-          setActiveNotes(new Set([note]));
-          onKeyClick(note);
-        }
+        // Trigger the note and set active note
+        instrument.triggerAttack(note);
+        setActiveNotes(new Set([note]));
+        onKeyClick(note);
       } catch (e) {
         console.error("Error handling key press:", e);
       }
@@ -132,8 +96,8 @@ const Keyboard = forwardRef<
       if (!instrument || !isLoaded) return;
 
       try {
-        // Only release if this note is actually active and we're not in sticky mode
-        if (activeNotes.has(note) && !isStickyKeys) {
+        // Only release if this note is actually active
+        if (activeNotes.has(note)) {
           // Ensure the note is valid before releasing
           if (note && typeof note === "string") {
             // For DuoSynth, we need to release both voices
@@ -223,8 +187,7 @@ const Keyboard = forwardRef<
       return keys
         .filter((key) => !key.isSharp)
         .map((key, index) => {
-          const isActive =
-            activeKeys.includes(key.note) || stickyNote === key.note;
+          const isActive = activeKeys.includes(key.note);
           const isHighlighted = highlightedKeys.includes(key.note);
 
           return (
@@ -249,8 +212,7 @@ const Keyboard = forwardRef<
       return keys
         .filter((key) => key.isSharp)
         .map((key, index) => {
-          const isActive =
-            activeKeys.includes(key.note) || stickyNote === key.note;
+          const isActive = activeKeys.includes(key.note);
           const isHighlighted = highlightedKeys.includes(key.note);
 
           // Find the index of this black key in the full keys array
@@ -296,7 +258,5 @@ const Keyboard = forwardRef<
     );
   }
 );
-
-Keyboard.displayName = "Keyboard";
 
 export default Keyboard;
