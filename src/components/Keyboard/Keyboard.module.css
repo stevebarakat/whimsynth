@@ -13,14 +13,12 @@
   border-radius: 0 0 4px 4px;
   position: relative;
   padding: 0 3px 4px;
-  overflow: hidden;
+  /* overflow: hidden; */
   box-shadow: 0 4px 6px -1px hsl(280, 30%, 45%),
     0 4px 6px -1px hsl(280, 50%, 20%);
   &:before {
     content: "";
     background: linear-gradient(180deg, hsl(275, 50%, 30%), hsl(276, 10%, 10%));
-    /* box-shadow: 0 4px 6px -1px hsl(280, 30%, 45%),
-      0 4px 6px -1px hsl(280, 50%, 20%); */
     display: flex;
     position: relative;
     width: calc(100% + 160px);
