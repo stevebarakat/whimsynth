@@ -212,13 +212,13 @@ input:checked + .toggleSlider:before {
   height: 9px;
   background: linear-gradient(
     180deg,
-    hsl(0, 0%, 15%) 0%,
-    hsl(0, 0%, 90%) 45%,
-    hsl(0, 0%, 90%) 55%,
-    hsl(0, 0%, 15%) 100%
+    hsl(0, 0%, 25%) 0%,
+    hsl(0, 0%, 75%) 37.5%,
+    hsl(0, 0%, 85%) 62.5%,
+    hsl(0, 0%, 25%) 100%
   );
-  border-top: 1px solid hsl(0, 0%, 5%);
-  border-bottom: 1px solid hsl(0, 0%, 5%);
+  border-top: 1.5px solid hsl(0, 0%, 25%);
+  border-bottom: 1.5px solid hsl(0, 0%, 25%);
 }
 
 .keyRow {
