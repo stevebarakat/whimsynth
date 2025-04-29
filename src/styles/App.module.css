@@ -16,6 +16,15 @@
   width: fit-content;
   margin: 25% auto 0;
   border-radius: 4px;
+  /* background: linear-gradient(180deg, #b3914d 0%, #aa8a49 96.63%, #4d3e21 100%); */
+
+  background: linear-gradient(
+    180deg,
+    #4d3e21 0%,
+    #b3914d 3%,
+    #aa8a49 99%,
+    #4d3e21 100%
+  );
 }
 
 .backPanel {
@@ -230,5 +239,4 @@ input:checked + .toggleSlider:before {
     hsl(280 50% 25%) 16px, */ hsl(280 50% 35%) 98%,
     hsl(280 50% 15%) 100%
   );
-  /* background: hsl(280, 40%, 30%); */
 }
