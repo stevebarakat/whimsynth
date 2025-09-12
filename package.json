@@ -18,8 +18,7 @@
     "lucide-react": "^0.503.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "tone": "^15.0.4",
-    "tunajs": "^1.0.15",
+    "tunajs": "github:Theodeus/tuna",
     "vite-tsconfig-paths": "^5.1.4",
     "xstate": "^5.19.2"
   },

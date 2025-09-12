@@ -1,31 +1,18 @@
-import { useState, useEffect, useImperativeHandle, forwardRef } from "react";
-import * as Tone from "tone";
-import { INSTRUMENT_TYPES } from "../../constants";
+import { useState, forwardRef } from "react";
 import styles from "./Keyboard.module.css";
 
-type Props = {
-  activeKeys?: string[];
-  octaveRange?: { min: number; max: number };
-  onKeyClick?: (note: string) => void;
-  instrumentType?: string;
-};
+function Keyboard() {
+  const [activeKeys, setActiveKeys] = useState<string[]>([]);
 
-function Keyboard(
-  {
-    activeKeys = [],
-    octaveRange = { min: 3, max: 5 },
-    onKeyClick = () => {},
-    instrumentType = INSTRUMENT_TYPES.SYNTH,
-  }: Props,
-  ref: React.ForwardedRef<{ instrument: Tone.DuoSynth | null }>
-) {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [instrument, setInstrument] = useState<Tone.DuoSynth | null>(null);
-  const [currentInstrumentType, setCurrentInstrumentType] =
-    useState(instrumentType);
+  const octaveRange = { min: 3, max: 5 };
 
-  // Keep track of currently playing notes
-  const [activeNotes, setActiveNotes] = useState<Set<string>>(new Set());
+  const handleKeyPress = (note: string) => {
+    setActiveKeys((prev) => [...prev, note]);
+  };
+
+  const handleKeyRelease = (note: string) => {
+    setActiveKeys((prev) => prev.filter((key) => key !== note));
+  };
 
   // Define notes for one octave in order (important for layout)
   const octave = [
@@ -43,139 +30,44 @@ function Keyboard(
     { note: "B", isSharp: false },
   ];
 
+  // Helper function to convert note to MIDI number
+  const noteToMidi = (note: string): number => {
+    const noteMap: { [key: string]: number } = {
+      C: 0,
+      "C#": 1,
+      D: 2,
+      "D#": 3,
+      E: 4,
+      F: 5,
+      "F#": 6,
+      G: 7,
+      "G#": 8,
+      A: 9,
+      "A#": 10,
+      B: 11,
+    };
+
+    const noteName = note.slice(0, -1);
+    const octave = parseInt(note.slice(-1));
+
+    return noteMap[noteName] + (octave + 1) * 12;
+  };
+
   // Create a keyboard with the specified octave range
   const keys: { note: string; isSharp: boolean }[] = [];
   for (let o = octaveRange.min; o <= octaveRange.max; o++) {
     octave.forEach((key) => {
       const note = `${key.note}${o}`;
       // Only include notes from G3 to B5 (two and a half octaves)
-      const noteValue = Tone.Frequency(note).toMidi();
-      const g3Value = Tone.Frequency("G3").toMidi();
-      const b5Value = Tone.Frequency("B5").toMidi();
+      const noteValue = noteToMidi(note);
+      const g3Value = noteToMidi("G3");
+      const b5Value = noteToMidi("B5");
 
       if (noteValue >= g3Value && noteValue <= b5Value) {
         keys.push({ note, isSharp: key.isSharp });
       }
     });
   }
-
-  // Update current instrument type when prop changes
-  useEffect(() => {
-    if (currentInstrumentType !== instrumentType) {
-      setCurrentInstrumentType(instrumentType);
-      setIsLoaded(false);
-    }
-  }, [instrumentType, currentInstrumentType]);
-
-  // Handle key press
-  function handleKeyPress(note: string) {
-    if (!instrument || !isLoaded) return;
-
-    try {
-      if (Tone.context.state !== "running") {
-        Tone.start();
-      }
-
-      // Trigger the note and set active note
-      instrument.triggerAttack(note);
-      setActiveNotes(new Set([note]));
-      onKeyClick(note);
-    } catch (e) {
-      console.error("Error handling key press:", e);
-    }
-  }
-
-  // Handle key release
-  function handleKeyRelease(note: string) {
-    if (!instrument || !isLoaded) return;
-
-    try {
-      // Only release if this note is actually active
-      if (activeNotes.has(note)) {
-        // Ensure the note is valid before releasing
-        if (note && typeof note === "string") {
-          // For DuoSynth, we need to release both voices
-          instrument.triggerRelease();
-          setActiveNotes((prev) => {
-            const next = new Set(prev);
-            next.delete(note);
-            return next;
-          });
-          onKeyClick("");
-        }
-      }
-    } catch (e) {
-      console.error("Error handling key release:", e);
-      // Reset active notes if we encounter an error
-      setActiveNotes(new Set());
-    }
-  }
-
-  // Release all notes when unmounting or changing instruments
-  useEffect(() => {
-    return () => {
-      if (instrument && activeNotes.size > 0) {
-        instrument.triggerRelease();
-        setActiveNotes(new Set());
-      }
-    };
-  }, [instrument, activeNotes]);
-
-  // Initialize the instrument
-  useEffect(() => {
-    let currentInstrument: Tone.DuoSynth | null = null;
-
-    async function initializeInstrument() {
-      try {
-        // Dispose of the old instrument if it exists
-        if (instrument) {
-          // Release any active notes before disposing
-          if (activeNotes.size > 0) {
-            instrument.triggerRelease();
-            setActiveNotes(new Set());
-          }
-          instrument.dispose();
-        }
-
-        currentInstrument = new Tone.DuoSynth({
-          voice0: {
-            oscillator: {
-              type: "triangle",
-            },
-          },
-          voice1: {
-            oscillator: {
-              type: "triangle",
-            },
-          },
-        });
-
-        // Connect to the effects bus
-        currentInstrument.connect(Tone.getDestination());
-
-        setIsLoaded(true);
-        setInstrument(currentInstrument);
-
-        // Start audio context
-        await Tone.start();
-        console.log("Audio context started");
-      } catch (e) {
-        console.error("Error initializing instrument:", e);
-        setIsLoaded(true);
-      }
-    }
-
-    if (!instrument || currentInstrumentType !== instrumentType) {
-      initializeInstrument();
-    }
-
-    return () => {
-      if (currentInstrumentType !== instrumentType && currentInstrument) {
-        currentInstrument.dispose();
-      }
-    };
-  }, [instrumentType, currentInstrumentType, instrument, activeNotes.size]);
-
   // Render white keys
   function renderWhiteKeys() {
     return keys
@@ -230,11 +122,6 @@ function Keyboard(
         );
       });
   }
-
-  // Expose the instrument to parent components via ref
-  useImperativeHandle(ref, () => ({
-    instrument,
-  }));
 
   return (
     <div className={styles.keyboardContainer}>
