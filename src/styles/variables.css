@@ -8,7 +8,7 @@
   --key-black: hsl(220, 13%, 18%);
   --key-black-hover: hsl(220, 13%, 25%);
   --key-black-active: hsl(220, 70%, 30%);
-  --highlight-color: hsl(45, 100%, 50%);
+  /* Text Colors */
   --text-primary: hsl(220, 13%, 95%);
   --text-secondary: hsl(220, 13%, 65%);
 }

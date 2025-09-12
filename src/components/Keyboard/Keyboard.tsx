@@ -1,17 +1,25 @@
 import { useState, forwardRef } from "react";
 import styles from "./Keyboard.module.css";
 
-function Keyboard() {
+interface KeyboardProps {
+  noteOn: (note: string) => void;
+  noteOff: (note: string) => void;
+  initializeAudioContext: () => void;
+}
+
+function Keyboard({ noteOn, noteOff, initializeAudioContext }: KeyboardProps) {
   const [activeKeys, setActiveKeys] = useState<string[]>([]);
 
   const octaveRange = { min: 3, max: 5 };
 
   const handleKeyPress = (note: string) => {
     setActiveKeys((prev) => [...prev, note]);
+    noteOn(note);
   };
 
   const handleKeyRelease = (note: string) => {
     setActiveKeys((prev) => prev.filter((key) => key !== note));
+    noteOff(note);
   };
 
   // Define notes for one octave in order (important for layout)
@@ -123,8 +131,12 @@ function Keyboard() {
       });
   }
 
+  const handleKeyboardClick = () => {
+    initializeAudioContext();
+  };
+
   return (
-    <div className={styles.keyboardContainer}>
+    <div className={styles.keyboardContainer} onClick={handleKeyboardClick}>
       <div className={styles.keyboard}>
         <div className={styles.pianoKeys}>
           {<div className={styles.leftShadow} />}

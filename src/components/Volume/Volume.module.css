@@ -1,0 +1,29 @@
+.volumeContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.volumeSlider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.volumeThumb {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.volumeTrack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.volumeRange {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
