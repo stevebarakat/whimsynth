@@ -1,4 +1,4 @@
-import { useState, forwardRef } from "react";
+import { useState } from "react";
 import styles from "./Keyboard.module.css";
 
 interface KeyboardProps {
@@ -149,4 +149,4 @@ function Keyboard({ noteOn, noteOff, initializeAudioContext }: KeyboardProps) {
   );
 }
 
-export default forwardRef(Keyboard);
+export default Keyboard;

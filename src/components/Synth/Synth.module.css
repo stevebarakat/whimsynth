@@ -235,8 +235,7 @@ input:checked + .toggleSlider:before {
   overflow: clip;
   background: linear-gradient(
     180deg,
-    /* hsl(280 50% 0%) 13px,
-    hsl(280 50% 25%) 16px, */ hsl(280 50% 35%) 98%,
+    hsl(280 50% 35%) 98%,
     hsl(280 50% 15%) 100%
   );
 }
