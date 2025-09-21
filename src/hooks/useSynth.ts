@@ -13,6 +13,16 @@ export interface DelayParams {
   delayTimeRight: number;
 }
 
+export interface ReverbParams {
+  highCut: number;
+  lowCut: number;
+  dryLevel: number;
+  wetLevel: number;
+  level: number;
+  impulse: string;
+  bypass: number;
+}
+
 interface ActiveNote {
   oscillator: OscillatorNode;
   gainNode: GainNode;
@@ -26,11 +36,21 @@ export function useSynth(
   const masterGainRef = useRef<GainNode | null>(null);
   const tunaRef = useRef<any>(null);
   const delayRef = useRef<any>(null);
+  const reverbRef = useRef<any>(null);
   const delayParamsRef = useRef<DelayParams>({
     wetLevel: 0.9,
     feedback: 0.2,
     delayTimeLeft: 100,
     delayTimeRight: 200,
+  });
+  const reverbParamsRef = useRef<ReverbParams>({
+    highCut: 22050,
+    lowCut: 20,
+    dryLevel: 0.7,
+    wetLevel: 0.3,
+    level: 1,
+    impulse: "/impulses/impulse_rev.wav",
+    bypass: 0,
   });
 
   const initializeAudioContext = useCallback(() => {
@@ -43,9 +63,13 @@ export function useSynth(
       delayRef.current = new tunaRef.current.PingPongDelay(
         delayParamsRef.current
       );
+      reverbRef.current = new tunaRef.current.Convolver(
+        reverbParamsRef.current
+      );
 
       masterGainRef.current.connect(delayRef.current.input);
-      delayRef.current.output.connect(audioContextRef.current.destination);
+      delayRef.current.output.connect(reverbRef.current.input);
+      reverbRef.current.output.connect(audioContextRef.current.destination);
     }
   }, [config.volume]);
 
@@ -147,6 +171,15 @@ export function useSynth(
     }
   }, []);
 
+  const setReverbMix = useCallback((mix: number) => {
+    reverbParamsRef.current.wetLevel = mix;
+    reverbParamsRef.current.dryLevel = 1 - mix;
+    if (reverbRef.current) {
+      reverbRef.current.wetLevel = mix;
+      reverbRef.current.dryLevel = 1 - mix;
+    }
+  }, []);
+
   useEffect(() => {
     return () => {
       stopAllNotes();
@@ -163,5 +196,6 @@ export function useSynth(
     initializeAudioContext,
     setVolume,
     setDelayFeedback,
+    setReverbMix,
   };
 }

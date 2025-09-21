@@ -9,7 +9,15 @@ declare module "tunajs/tuna.js" {
       delayTimeLeft: number;
       delayTimeRight: number;
     }) => AudioNode;
-    Convolver: new (options: any) => any;
+    Convolver: new (options: {
+      highCut: number;
+      lowCut: number;
+      dryLevel: number;
+      wetLevel: number;
+      level: number;
+      impulse: string;
+      bypass: number;
+    }) => AudioNode;
     Overdrive: new (options: any) => any;
   }
   export = Tuna;

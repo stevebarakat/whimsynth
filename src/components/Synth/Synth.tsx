@@ -19,6 +19,7 @@ function Synth() {
     noteOff,
     initializeAudioContext,
     setDelayFeedback,
+    setReverbMix,
   } = useSynth({
     oscillatorType: "sine",
     volume: volume[0],
@@ -31,6 +32,10 @@ function Synth() {
 
   const handleDelayChange = (feedback: number) => {
     setDelayFeedback(feedback);
+  };
+
+  const handleReverbChange = (mix: number) => {
+    setReverbMix(mix);
   };
 
   return (
@@ -55,7 +60,7 @@ function Synth() {
                 </div>
                 <div className="flex-between gap-1">
                   <Tremolo />
-                  <Reverb />
+                  <Reverb onReverbChange={handleReverbChange} />
                   <Delay onDelayChange={handleDelayChange} />
                 </div>
               </div>
