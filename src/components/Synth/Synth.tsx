@@ -3,6 +3,13 @@ import styles from "./Synth.module.css";
 import Volume from "@/components/Volume";
 import { useSynth } from "@/hooks/useSynth";
 import { useState } from "react";
+import Logo from "@/components/Logo";
+import Distort from "../Distort";
+import Filter from "../Filter";
+import Phaser from "../Phaser";
+import Reverb from "../Reverb";
+import Delay from "../Delay";
+import Tremolo from "../Tremolo";
 
 function Synth() {
   const [volume, setVolumeState] = useState([0.3]);
@@ -23,10 +30,26 @@ function Synth() {
           <div className={styles.backPanel}></div>
           <div className={styles.innerControlsContainer}>
             <div className={styles.box}>
-              <Volume value={volume} onValueChange={handleVolumeChange} />
+              <div className="flex-column-between gap-1">
+                <Logo />
+                <Volume value={volume} onValueChange={handleVolumeChange} />
+              </div>
             </div>
             <div className={styles.indent}></div>
-            <div className={styles.box}></div>
+            <div className={styles.box}>
+              <div className="flex-column-between gap-1">
+                <div className="flex-between gap-1">
+                  <Filter />
+                  <Distort />
+                  <Phaser />
+                </div>
+                <div className="flex-between gap-1">
+                  <Tremolo />
+                  <Reverb />
+                  <Delay />
+                </div>
+              </div>
+            </div>
             <div className={styles.indent}></div>
             <div className={styles.box}></div>
           </div>

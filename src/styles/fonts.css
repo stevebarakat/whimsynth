@@ -1,0 +1,17 @@
+/* Futura Font Family - Custom Font Loading */
+
+@font-face {
+  font-family: Cartograph;
+  src: url("./fonts/cartograph.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Cartograph;
+  src: url("./fonts/cartograph-900.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}

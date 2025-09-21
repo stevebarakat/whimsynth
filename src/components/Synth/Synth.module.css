@@ -62,22 +62,22 @@
 .innerControlsContainer {
   display: grid;
   grid-template-columns: 24% 1% 50% 1% 24%;
-  width: 100%;
-  justify-content: space-between;
-  height: 200px;
+  height: 100%;
 }
 
 .box {
-  position: relative;
-  height: calc(var(--row-height) - 8px);
-  margin: 4px;
   border: 2px solid hsla(280, 30%, 80%, 0.4);
   border-radius: 2px;
+  position: relative;
+  height: 95%;
+  margin: 4px;
   background: hsl(280, 40%, 30%);
+  padding: 12px;
 }
 
 .indent {
   width: 8px;
+  height: 100%;
   background: linear-gradient(
     90deg,
     hsl(280, 20%, 20%),
@@ -238,4 +238,11 @@ input:checked + .toggleSlider:before {
     hsl(280 50% 35%) 98%,
     hsl(280 50% 15%) 100%
   );
+}
+
+.firstBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

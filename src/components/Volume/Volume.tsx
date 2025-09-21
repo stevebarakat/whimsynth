@@ -10,6 +10,7 @@ function Volume({ value, onValueChange }: VolumeProps) {
   return (
     <div className={styles.volumeContainer}>
       <Slider value={value} onValueChange={onValueChange} />
+      <div className={styles.volumeLabel}>Volume</div>
     </div>
   );
 }

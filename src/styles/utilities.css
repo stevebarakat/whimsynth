@@ -1,0 +1,63 @@
+/* Utilities */
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-center-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.flex-column-between {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-around {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.gap-1 {
+  gap: 1rem;
+}
+
+.gap-2 {
+  gap: 2rem;
+}
+
+.gap-3 {
+  gap: 3rem;
+}
+
+.gap-4 {
+  gap: 4rem;
+}
+
+.gap-5 {
+  gap: 5rem;
+}
