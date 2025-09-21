@@ -13,7 +13,13 @@ import Tremolo from "../Tremolo";
 
 function Synth() {
   const [volume, setVolumeState] = useState([0.3]);
-  const { setVolume, noteOn, noteOff, initializeAudioContext } = useSynth({
+  const {
+    setVolume,
+    noteOn,
+    noteOff,
+    initializeAudioContext,
+    setDelayFeedback,
+  } = useSynth({
     oscillatorType: "sine",
     volume: volume[0],
   });
@@ -21,6 +27,10 @@ function Synth() {
   const handleVolumeChange = (value: number[]) => {
     setVolumeState(value);
     setVolume(value[0]);
+  };
+
+  const handleDelayChange = (feedback: number) => {
+    setDelayFeedback(feedback);
   };
 
   return (
@@ -46,7 +56,7 @@ function Synth() {
                 <div className="flex-between gap-1">
                   <Tremolo />
                   <Reverb />
-                  <Delay />
+                  <Delay onDelayChange={handleDelayChange} />
                 </div>
               </div>
             </div>

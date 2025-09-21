@@ -1,8 +1,16 @@
 import { useRef, useCallback, useEffect } from "react";
+import Tuna from "tunajs/tuna.js";
 
 interface SynthConfig {
   oscillatorType: OscillatorType;
   volume: number;
+}
+
+export interface DelayParams {
+  wetLevel: number;
+  feedback: number;
+  delayTimeLeft: number;
+  delayTimeRight: number;
 }
 
 interface ActiveNote {
@@ -16,13 +24,28 @@ export function useSynth(
   const audioContextRef = useRef<AudioContext | null>(null);
   const activeNotesRef = useRef<Map<string, ActiveNote>>(new Map());
   const masterGainRef = useRef<GainNode | null>(null);
+  const tunaRef = useRef<any>(null);
+  const delayRef = useRef<any>(null);
+  const delayParamsRef = useRef<DelayParams>({
+    wetLevel: 0.9,
+    feedback: 0.2,
+    delayTimeLeft: 100,
+    delayTimeRight: 200,
+  });
 
   const initializeAudioContext = useCallback(() => {
     if (!audioContextRef.current) {
       audioContextRef.current = new AudioContext();
       masterGainRef.current = audioContextRef.current.createGain();
       masterGainRef.current.gain.value = config.volume;
-      masterGainRef.current.connect(audioContextRef.current.destination);
+
+      tunaRef.current = new Tuna(audioContextRef.current);
+      delayRef.current = new tunaRef.current.PingPongDelay(
+        delayParamsRef.current
+      );
+
+      masterGainRef.current.connect(delayRef.current.input);
+      delayRef.current.output.connect(audioContextRef.current.destination);
     }
   }, [config.volume]);
 
@@ -117,6 +140,13 @@ export function useSynth(
     }
   }, []);
 
+  const setDelayFeedback = useCallback((feedback: number) => {
+    delayParamsRef.current.feedback = feedback;
+    if (delayRef.current) {
+      delayRef.current.feedback = feedback;
+    }
+  }, []);
+
   useEffect(() => {
     return () => {
       stopAllNotes();
@@ -132,5 +162,6 @@ export function useSynth(
     stopAllNotes,
     initializeAudioContext,
     setVolume,
+    setDelayFeedback,
   };
 }
