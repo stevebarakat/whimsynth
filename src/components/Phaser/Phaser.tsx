@@ -1,5 +1,3 @@
-import React from "react";
-
 import EffectControl from "@/components/EffectControl";
 
 interface PhaserProps {

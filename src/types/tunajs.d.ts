@@ -1,8 +1,6 @@
-declare module "tunajs/tuna.js" {
+declare module "tunajs" {
   class Tuna {
     constructor(audioContext: AudioContext);
-    Filter: new (options: any) => any;
-    Delay: new (options: any) => any;
     PingPongDelay: new (options: {
       wetLevel: number;
       feedback: number;
@@ -26,7 +24,6 @@ declare module "tunajs/tuna.js" {
       baseModulationFrequency: number;
       bypass: number;
     }) => AudioNode;
-    Overdrive: new (options: any) => any;
   }
   export = Tuna;
 }

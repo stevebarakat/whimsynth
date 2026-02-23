@@ -1,5 +1,5 @@
 import { useRef, useCallback, useEffect } from "react";
-import Tuna from "tunajs/tuna.js";
+import Tuna from "tunajs";
 
 const logToLinear = (logValue: number): number => {
   return Math.pow(10, (logValue - 1) * 2);
@@ -48,9 +48,13 @@ export function useSynth(
   const activeNotesRef = useRef<Map<string, ActiveNote>>(new Map());
   const masterGainRef = useRef<GainNode | null>(null);
   const outputGainRef = useRef<GainNode | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const tunaRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const delayRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const reverbRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const phaserRef = useRef<any>(null);
   const delayParamsRef = useRef<DelayParams>({
     wetLevel: 0,
@@ -268,7 +272,6 @@ export function useSynth(
   return {
     noteOn,
     noteOff,
-    stopAllNotes,
     initializeAudioContext,
     setVolume,
     setDelayFeedback,
