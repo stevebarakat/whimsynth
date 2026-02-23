@@ -8,7 +8,6 @@ function Delay({ onDelayChange }: DelayProps) {
   return (
     <EffectControl
       label="Delay"
-      controlLabel="Feedback"
       defaultValue={0.2}
       min={0}
       max={0.95}

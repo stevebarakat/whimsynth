@@ -11,8 +11,13 @@ import Reverb from "../Reverb";
 import Delay from "../Delay";
 import Tremolo from "../Tremolo";
 
+const linearToLog = (linearValue: number): number => {
+  return 1 + Math.log10(Math.max(linearValue, 0.001)) / 2;
+};
+
 function Synth() {
-  const [volume, setVolumeState] = useState([0.3]);
+  const initialVolume = 0.8;
+  const [volume, setVolumeState] = useState([linearToLog(initialVolume)]);
   const {
     setVolume,
     noteOn,
@@ -20,9 +25,10 @@ function Synth() {
     initializeAudioContext,
     setDelayFeedback,
     setReverbMix,
+    setPhaserRate,
   } = useSynth({
     oscillatorType: "sine",
-    volume: volume[0],
+    volume: initialVolume,
   });
 
   const handleVolumeChange = (value: number[]) => {
@@ -36,6 +42,10 @@ function Synth() {
 
   const handleReverbChange = (mix: number) => {
     setReverbMix(mix);
+  };
+
+  const handlePhaserChange = (rate: number) => {
+    setPhaserRate(rate);
   };
 
   return (
@@ -56,7 +66,7 @@ function Synth() {
                 <div className="flex-between gap-1">
                   <Filter />
                   <Distort />
-                  <Phaser />
+                  <Phaser onPhaserChange={handlePhaserChange} />
                 </div>
                 <div className="flex-between gap-1">
                   <Tremolo />

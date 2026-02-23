@@ -4,7 +4,6 @@ import styles from "./EffectControl.module.css";
 
 interface EffectControlProps {
   label: string;
-  controlLabel: string;
   defaultValue?: number;
   min?: number;
   max?: number;
@@ -14,7 +13,6 @@ interface EffectControlProps {
 
 function EffectControl({
   label,
-  controlLabel,
   defaultValue = 0.3,
   min = 0,
   max = 1,
@@ -32,16 +30,13 @@ function EffectControl({
     <div className={styles.effectContainer}>
       <div className={styles.effectLabel}>{label}</div>
       <div className={styles.effectControls}>
-        <div className={styles.controlGroup}>
-          <div className={styles.controlLabel}>{controlLabel}</div>
-          <Slider
-            value={value}
-            onValueChange={handleChange}
-            min={min}
-            max={max}
-            step={step}
-          />
-        </div>
+        <Slider
+          value={value}
+          onValueChange={handleChange}
+          min={min}
+          max={max}
+          step={step}
+        />
       </div>
     </div>
   );

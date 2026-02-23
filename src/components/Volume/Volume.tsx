@@ -9,7 +9,13 @@ interface VolumeProps {
 function Volume({ value, onValueChange }: VolumeProps) {
   return (
     <div className={styles.volumeContainer}>
-      <Slider value={value} onValueChange={onValueChange} />
+      <Slider
+        value={value}
+        onValueChange={onValueChange}
+        min={0}
+        max={2}
+        step={0.01}
+      />
       <div className={styles.volumeLabel}>Volume</div>
     </div>
   );

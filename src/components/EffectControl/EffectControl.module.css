@@ -9,10 +9,10 @@
 }
 
 .effectLabel {
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: var(--text-primary);
+  color: #cec2d6;
 }
 
 .effectControls {
@@ -20,17 +20,4 @@
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
-}
-
-.controlGroup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.controlLabel {
-  font-size: 0.625rem;
-  color: var(--text-secondary);
-  text-align: center;
 }

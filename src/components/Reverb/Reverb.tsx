@@ -8,7 +8,6 @@ function Reverb({ onReverbChange }: ReverbProps) {
   return (
     <EffectControl
       label="Reverb"
-      controlLabel="Mix"
       defaultValue={0.3}
       min={0}
       max={1}

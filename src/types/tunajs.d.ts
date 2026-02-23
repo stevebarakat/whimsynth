@@ -18,6 +18,14 @@ declare module "tunajs/tuna.js" {
       impulse: string;
       bypass: number;
     }) => AudioNode;
+    Phaser: new (options: {
+      rate: number;
+      depth: number;
+      feedback: number;
+      stereoPhase: number;
+      baseModulationFrequency: number;
+      bypass: number;
+    }) => AudioNode;
     Overdrive: new (options: any) => any;
   }
   export = Tuna;

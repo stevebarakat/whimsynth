@@ -1,6 +1,10 @@
 import { useRef, useCallback, useEffect } from "react";
 import Tuna from "tunajs/tuna.js";
 
+const logToLinear = (logValue: number): number => {
+  return Math.pow(10, (logValue - 1) * 2);
+};
+
 interface SynthConfig {
   oscillatorType: OscillatorType;
   volume: number;
@@ -23,23 +27,34 @@ export interface ReverbParams {
   bypass: number;
 }
 
+export interface PhaserParams {
+  rate: number;
+  depth: number;
+  feedback: number;
+  stereoPhase: number;
+  baseModulationFrequency: number;
+  bypass: number;
+}
+
 interface ActiveNote {
   oscillator: OscillatorNode;
   gainNode: GainNode;
 }
 
 export function useSynth(
-  config: SynthConfig = { oscillatorType: "sine", volume: 0.3 }
+  config: SynthConfig = { oscillatorType: "sine", volume: 0.8 }
 ) {
   const audioContextRef = useRef<AudioContext | null>(null);
   const activeNotesRef = useRef<Map<string, ActiveNote>>(new Map());
   const masterGainRef = useRef<GainNode | null>(null);
+  const outputGainRef = useRef<GainNode | null>(null);
   const tunaRef = useRef<any>(null);
   const delayRef = useRef<any>(null);
   const reverbRef = useRef<any>(null);
+  const phaserRef = useRef<any>(null);
   const delayParamsRef = useRef<DelayParams>({
-    wetLevel: 0.9,
-    feedback: 0.2,
+    wetLevel: 0,
+    feedback: 0,
     delayTimeLeft: 100,
     delayTimeRight: 200,
   });
@@ -52,12 +67,51 @@ export function useSynth(
     impulse: "/impulses/impulse_rev.wav",
     bypass: 0,
   });
+  const phaserParamsRef = useRef<PhaserParams>({
+    rate: 0.5,
+    depth: 0.5,
+    feedback: 0.3,
+    stereoPhase: 0,
+    baseModulationFrequency: 700,
+    bypass: 0,
+  });
+
+  const rebuildAudioChain = useCallback(() => {
+    if (!masterGainRef.current || !outputGainRef.current) return;
+
+    masterGainRef.current.disconnect();
+
+    const phaserActive = phaserParamsRef.current.depth > 0;
+    const delayActive = delayParamsRef.current.feedback > 0;
+    const reverbActive = reverbParamsRef.current.wetLevel > 0;
+
+    let currentNode = masterGainRef.current;
+
+    if (phaserActive && phaserRef.current) {
+      currentNode.connect(phaserRef.current.input);
+      currentNode = phaserRef.current.output;
+    }
+
+    if (delayActive && delayRef.current) {
+      currentNode.connect(delayRef.current.input);
+      currentNode = delayRef.current.output;
+    }
+
+    if (reverbActive && reverbRef.current) {
+      currentNode.connect(reverbRef.current.input);
+      currentNode = reverbRef.current.output;
+    }
+
+    currentNode.connect(outputGainRef.current);
+  }, []);
 
   const initializeAudioContext = useCallback(() => {
     if (!audioContextRef.current) {
       audioContextRef.current = new AudioContext();
       masterGainRef.current = audioContextRef.current.createGain();
-      masterGainRef.current.gain.value = config.volume;
+      masterGainRef.current.gain.value = 1.0;
+      outputGainRef.current = audioContextRef.current.createGain();
+      outputGainRef.current.gain.value = logToLinear(config.volume);
 
       tunaRef.current = new Tuna(audioContextRef.current);
       delayRef.current = new tunaRef.current.PingPongDelay(
@@ -66,12 +120,12 @@ export function useSynth(
       reverbRef.current = new tunaRef.current.Convolver(
         reverbParamsRef.current
       );
+      phaserRef.current = new tunaRef.current.Phaser(phaserParamsRef.current);
 
-      masterGainRef.current.connect(delayRef.current.input);
-      delayRef.current.output.connect(reverbRef.current.input);
-      reverbRef.current.output.connect(audioContextRef.current.destination);
+      rebuildAudioChain();
+      outputGainRef.current.connect(audioContextRef.current.destination);
     }
-  }, [config.volume]);
+  }, [config.volume, rebuildAudioChain]);
 
   const noteToFrequency = useCallback((note: string): number => {
     const noteMap: { [key: string]: number } = {
@@ -115,7 +169,7 @@ export function useSynth(
 
       gainNode.gain.setValueAtTime(0, audioContext.currentTime);
       gainNode.gain.linearRampToValueAtTime(
-        0.5,
+        0.1,
         audioContext.currentTime + 0.01
       );
 
@@ -159,26 +213,48 @@ export function useSynth(
   }, [noteOff]);
 
   const setVolume = useCallback((volume: number) => {
-    if (masterGainRef.current) {
-      masterGainRef.current.gain.value = volume;
+    if (outputGainRef.current) {
+      outputGainRef.current.gain.value = logToLinear(volume);
     }
   }, []);
 
-  const setDelayFeedback = useCallback((feedback: number) => {
-    delayParamsRef.current.feedback = feedback;
-    if (delayRef.current) {
-      delayRef.current.feedback = feedback;
-    }
-  }, []);
+  const setPhaserRate = useCallback(
+    (value: number) => {
+      phaserParamsRef.current.rate = value;
+      phaserParamsRef.current.depth = value;
+      if (phaserRef.current) {
+        phaserRef.current.rate = value;
+        phaserRef.current.depth = value;
+      }
+      rebuildAudioChain();
+    },
+    [rebuildAudioChain]
+  );
 
-  const setReverbMix = useCallback((mix: number) => {
-    reverbParamsRef.current.wetLevel = mix;
-    reverbParamsRef.current.dryLevel = 1 - mix;
-    if (reverbRef.current) {
-      reverbRef.current.wetLevel = mix;
-      reverbRef.current.dryLevel = 1 - mix;
-    }
-  }, []);
+  const setDelayFeedback = useCallback(
+    (feedback: number) => {
+      delayParamsRef.current.feedback = feedback;
+      if (delayRef.current) {
+        delayRef.current.feedback = feedback;
+        delayRef.current.wetLevel = feedback > 0 ? 0.3 : 0;
+      }
+      rebuildAudioChain();
+    },
+    [rebuildAudioChain]
+  );
+
+  const setReverbMix = useCallback(
+    (mix: number) => {
+      reverbParamsRef.current.wetLevel = mix;
+      reverbParamsRef.current.dryLevel = 1 - mix;
+      if (reverbRef.current) {
+        reverbRef.current.wetLevel = mix;
+        reverbRef.current.dryLevel = 1 - mix;
+      }
+      rebuildAudioChain();
+    },
+    [rebuildAudioChain]
+  );
 
   useEffect(() => {
     return () => {
@@ -197,5 +273,6 @@ export function useSynth(
     setVolume,
     setDelayFeedback,
     setReverbMix,
+    setPhaserRate,
   };
 }

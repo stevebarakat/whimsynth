@@ -73,6 +73,10 @@
   margin: 4px;
   background: hsl(280, 40%, 30%);
   padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .indent {
@@ -167,11 +171,9 @@ input:checked + .toggleSlider:before {
 .modWheelwell {
   --gap: 0px;
   position: relative;
-  width: calc(12px + 4 * var(--gap));
-  height: calc(92px + 8 * var(--gap));
+  /* width: calc(12px + 4 * var(--gap)); */
+  height: calc(112px + 8 * var(--gap));
   padding: var(--gap);
-  /* outline: 2px solid hsla(280, 30%, 80%, 0.4); */
-  /* outline-offset: 2px; */
   border-radius: 2px;
   border-top: 2px solid hsl(0, 0%, 12.5%);
   border-bottom: 2px solid hsl(0, 0%, 12.5%);
